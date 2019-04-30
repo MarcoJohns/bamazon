@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
     user: "root",
 
     // Your password
-    password: "",
+    password: "1qaz!QAZ",
     database: "bamazon_db"
 });
 
@@ -20,5 +20,43 @@ connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId + "\n");
     // run the start function after the connection is made to prompt the user
-    // start();
+    perchase();
+
+
 });
+
+
+// connection.query("SELECT * FROM products", function (err, res) {
+//     for (var i = 0; i < res.length; i++) {
+//         console.log('id: ' + res[i].id + " | " + res[i].porduct_name + " | " + '$ ' + res[i].price);
+//     }
+//     console.log("-----------------------------------");
+//     perchase();
+// })
+
+
+
+function perchase() {
+    connection.query("SELECT * FROM products", function (err, res) {
+        for (var i = 0; i < res.length; i++) {
+            console.log('id: ' + res[i].id + " | " + res[i].porduct_name + " | " + '$ ' + res[i].price);
+        }
+        console.log("-----------------------------------");
+        if (err) throw err;
+        inquirer
+            .prompt([
+                {
+                    name: "idNumber",
+                    type: "input",
+                    message: "Type the id number of the item you would like to purchase."
+                },
+                {
+                    name: "quantity",
+                    type: "input",
+                    message: "How (many/much) would you like to buy?"
+                }
+            ])
+
+    });
+}
+
